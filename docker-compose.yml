@@ -1,0 +1,30 @@
+version: '2'
+services:
+  formbuilder_app:
+    build: environment/containers/formbuilder_app/.
+    container_name: formbuilder_app
+    volumes:
+      - .:/var/www/html
+      - ./logs/app:/var/log/httpd
+    labels:
+      - "traefik.frontend.rule=Host:local.formbuilder.com"
+      - "traefik.port=80"
+    links:
+      - formbuilder_db
+    extra_hosts:
+      - "local.formbuilder.com:127.0.0.1"
+    network_mode: "bridge"
+    env_file: .docker.env
+  formbuilder_db:
+    image: mariadb:10.4
+    container_name: formbuilder_db
+    volumes:
+      - ./environment/volumes/formbuilder_db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=formbuilder
+      - MYSQL_USER=formuser
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306
+    network_mode: "bridge"
