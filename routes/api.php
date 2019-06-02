@@ -18,5 +18,6 @@ Route::group(['prefix' => 'v1', 'namespace' => '\App\Api\V1\Controllers'], funct
 
     Route::prefix('form/{form}')->group(function () {
        Route::resource('field', 'FormFieldController');
+       Route::resource('submission', 'SubmissionController')->only('store');
     });
 });
