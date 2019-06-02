@@ -14,7 +14,6 @@ services:
     extra_hosts:
       - "local.formbuilder.com:127.0.0.1"
     network_mode: "bridge"
-    env_file: .docker.env
   formbuilder_db:
     image: mariadb:10.4
     container_name: formbuilder_db
